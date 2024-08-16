@@ -32,7 +32,7 @@
     "eslint-plugin-promise": "^6.1.0",
     "eslint-plugin-react": "^7.31.10",
     "gh-pages": "^6.1.1",
-    "node-sass": "^7.0.3",
+    "node-sass": "^9.0.0",
     "prettier": "2.7.1",
     "sass": "^1.55.0",
     "sass-loader": "^10.3.1",
