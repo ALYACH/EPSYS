@@ -50,6 +50,10 @@ export interface ParticleModelProps {
    * 可以查看这篇指南引入：https://vitejs.cn/vite3-cn/guide/assets.html#new-url-url-import-meta-url
    */
   path?: string
+  /** 是否是当前模型
+   * @default false
+*/
+  isCurrentModel?: boolean
   /**
    * 自定义加载器
    * @example

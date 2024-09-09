@@ -114,7 +114,7 @@ class ParticleSystem {
     // 创建场景
     this.createScene()
     // 性能监控插件
-    this.initStats()
+    // this.initStats()
     // 载入模型
     this._addModels()
     // 效果器
@@ -144,9 +144,9 @@ class ParticleSystem {
     this.camera.position.set(0, 0, 1e3)
     this.camera.lookAt(new THREE.Vector3(0, 0, 0))
 
-    // 坐标轴辅助器
-    const axesHelper = new THREE.AxesHelper(500)
-    this.scene.add(axesHelper)
+    // 坐标轴辅助器--发布后删除
+    // const axesHelper = new THREE.AxesHelper(500)
+    // this.scene.add(axesHelper)
     // addons 添加
     if (this.addons != null) {
       this.addons.forEach((val) => {
@@ -346,13 +346,14 @@ class ParticleSystem {
    * @param {number?} time 动画时间长度，默认 `1500ms`
    */
   ChangeModel(name: string, time: number = this.AnimateDuration) {
+    
     const item = this.modelList.get(name)
-
     if (item == null) {
       console.warn('未找到指定名字的模型，改变操作已终止！传入的名字：' + name.toString())
       return
     }
     const itemHook = this.Models.get(name)
+    console.log("itemHook",this);
     if (this.CurrentUseModelName !== undefined) this.LastUseModelName = this.CurrentUseModelName
     this.CurrentUseModelName = name
     /** 模型切换开始的钩子 */
@@ -489,7 +490,9 @@ class ParticleSystem {
     // 模型 update 钩子更新
     this.Models.forEach((val) => {
       if (val.name === this.CurrentUseModelName && val.onAnimationFrameUpdate != null) {
+        
         if (val.onAnimationFrameUpdate(this.AnimateEffectParticle!, this.ParticleAnimeMap, val.geometry!) === true) {
+          
           for (const i of BuiltinShaderAttributeName) {
             const p = this.AnimateEffectParticle?.geometry?.getAttribute(i)
             if (p != null) {

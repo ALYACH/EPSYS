@@ -1,8 +1,25 @@
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: "FontRegular";src: url("../../assets/fonts/AlimamaFangYuanTiVF-Thin.woff2") format("woff2"),
+  url("../../assets/fonts/AlimamaFangYuanTiVF-Thin.woff") format("woff");
+  font-display: swap;
+}
 .index_page {
   width: 100%;
   height: 100%;
 }
-
+.top{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  // padding: .6rem .6rem;
+  padding: 1rem;
+  z-index: 3;
+  overflow: hidden;
+  color: #fff;
+  opacity: .8;
+}
 .canvas_wrapper {
   position: fixed;
   top: 0;
@@ -11,32 +28,118 @@
   bottom: 0;
 }
 
-.list,
-.function_list {
+.list {
   position: fixed;
-  right: .6rem;
+  // left: .6rem;
   top: 50%;
   width: fit-content;
   transform: translateY(-50%);
-
+  margin-left:30px;
+  list-style-type: none;
   li {
+    position: relative;
     width: fit-content;
+    height: 60px;
     color: #fff;
     font-size: .4rem;
     cursor: pointer;
-    opacity: .8;
-
-    &:hover {
-      opacity: 1;
+    //opacity: .8;
+    // opacity: 0;
+    span{
+      opacity: 0;
     }
+  }
+
+  &:hover li:not(.active) span{
+    opacity: .8;
   }
 }
 
+// .list li i{
+//   font-size: 15px;
+//   color: #a6a6aa;
+//   font-style: normal;
+// }
+.list li i:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-radius: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  border: 3px solid #fff;
+  transition: left .3s, top .3s, width .3s, height .3s;
+  opacity: .8;
+  position: absolute;
+  left: -21px;
+  top: 8px;
+}
+
+li.active span{
+  opacity: 1 !important;
+  color:#fff;
+}
+.list li.active i:before {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #fff;
+  left: -27px;
+  top: 2px;
+}
 .list {
-  right: .6rem;
-
-}
-
-.function_list {
   left: .6rem;
+  z-index: 2;
 }
+
+// .function_list {
+//   left: .6rem;
+// }
+.thtableCell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.lefttxt{
+  opacity: .8;
+  filter: blur(0);
+  position: absolute;
+  top: 50%;
+  left: 400px;
+  transform: translate(0, -50%);
+  //transform: translate(-50%, -50%);
+  font-size: .6rem;
+  color: #fff;
+  text-align: left;
+  width: 31%;
+  // transition: opacity 1s ease-in-out;
+  p{
+    font-family: "FontRegular";
+     height:50px;
+  }
+}
+.righttxt{
+  opacity: .8;
+  filter: blur(0);
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+  //transform: translate(-50%, -50%);
+  font-size: .6rem;
+  color: #fff;
+  text-align: left;
+  width: 31%;
+  p{
+    font-family: "FontRegular";
+     height:50px;
+  }
+  
+}
+.box{
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+// #content_box p{
+//   height:40px;
+// }
