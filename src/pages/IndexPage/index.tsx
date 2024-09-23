@@ -22,7 +22,10 @@ function IndexPage() {
   const [txtcontent1,setTxtcontent1] = React.useState("")
   const [txtcontent2,setTxtcontent2] = React.useState("")
   const [txtcontent3,setTxtcontent3] = React.useState("")
-  const txtobj={
+  interface TextObj {
+    [key: string]: string[]
+  }
+  const txtobj:TextObj={
     "数据":["实时数据收集处理","精准决策支持","信息共享协同"],
     "范围":["跨国团队协作紧密","多元文化融合创新","全球化视野决策高效"],//"全球视野","多元文化","高效决策"
     "安全":["数据加密技术先进","多重备份防数据丢失","访问控制与审计严格"],
