@@ -91,6 +91,7 @@ class ParticleSystem {
     this.CanvasWrapper = options.CanvasWrapper
     this.addons = options.addons != null ? options.addons : []
     this.Models = new Map<string, ParticleModelProps>()
+    //  this.CurrentUseModelName = "数据"
     for (const i of options.Models) {
       this.Models.set(i.name, i)
     }
@@ -105,6 +106,7 @@ class ParticleSystem {
     this.WIDTH = window.innerWidth
     /** 模型列表  */
     this.modelList = new Map()
+    console.log("modelList qian", this.modelList)
     /** 已加载的模型数量统计 */
     this._LOAD_COUNT_ = 0
     /** 模型指针 */
@@ -346,7 +348,9 @@ class ParticleSystem {
    * @param {number?} time 动画时间长度，默认 `1500ms`
    */
   ChangeModel(name: string, time: number = this.AnimateDuration) {
-    
+    console.log("this.modelList",this.modelList);
+    console.log("this.Models",this.Models);
+
     const item = this.modelList.get(name)
     if (item == null) {
       console.warn('未找到指定名字的模型，改变操作已终止！传入的名字：' + name.toString())

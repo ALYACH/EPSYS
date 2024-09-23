@@ -15,6 +15,7 @@ function IndexPage() {
   // let MainParticle: ParticleSystem | null = null
   const MainParticle=useRef<ParticleSystem | null>(null)
   let hasInit = false
+  let lastname=""
   const TurnBasicNum = { firefly: 0.002 }
   const al = 1500
   const [current,setCurrent] = React.useState("")
@@ -144,7 +145,7 @@ function IndexPage() {
   let name="";
   function change(val: ParticleModelProps) {
     let name=val.name
-    setCurrent(name)
+      setCurrent(name)
     setTxtbox("")
     setTxtcontent1("")
     setTxtcontent2("")
@@ -161,7 +162,7 @@ function IndexPage() {
       setTxtcontent1(txtobj[name][0])
       setTxtcontent2(txtobj[name][1])
       setTxtcontent3(txtobj[name][2])
-  }, 3000); // 延迟3秒
+  }, 3000) // 延迟3秒
     
   }
   // @ts-expect-error
@@ -171,7 +172,6 @@ function IndexPage() {
       MainParticle.current.ChangeModel(name)
     }
   }
-
   useEffect(() => {
     console.log("useEffect",MainParticle)
     console.log("wrapper",wrapper)
@@ -186,7 +186,17 @@ function IndexPage() {
               MainParticle.current?.ListenMouseMove()
             }
           })
+          
+          console.log("Models",Models)
+          setTimeout(function() {
+            change(Models[0])
+          },1000)
       }
+    //   if (!hasInit) {
+    //   hasInit = true
+    //   change(Models[0])
+    // }
+    // console.log("hasInit",hasInit)
     // if ((MainParticle == null) && wrapper.current != null) {
     //   MainParticle = new ParticleSystem({
     //     CanvasWrapper: wrapper.current,
@@ -199,13 +209,18 @@ function IndexPage() {
       // let current = MainParticle.CurrentUseModelName?MainParticle.CurrentUseModelName: 'wave';
       // setCurrent(current)
     // }
-  })
-
+  });
+//   (()=>{
+//     if(document.all){
+//     MainParticle.current?.ChangeModel("数据")
+//     }
+//  })();
+ 
   return (
     <div className={Styles.index_page}>
       <div className={Styles.top}>
         {/* <img src="../../src/assets/images/logo.png" alt="" /> */}
-        <div className={Styles.title}>FOXCONN</div>
+        <div className={Styles.title}>FOXCONN<span>科技</span></div>
       </div>
       
       <div className={Styles.canvas_wrapper} ref={wrapper}></div>
