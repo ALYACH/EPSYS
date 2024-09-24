@@ -16,6 +16,8 @@ function IndexPage() {
   const MainParticle=useRef<ParticleSystem | null>(null)
   let hasInit = false
   let lastname=""
+  let time_change:any
+  let time_txt:any
   const TurnBasicNum = { firefly: 0.002 }
   const al = 1500
   const [current,setCurrent] = React.useState("")
@@ -152,8 +154,8 @@ function IndexPage() {
     setTxtcontent3("")
     MainParticle.current?.ChangeModel(name)
     console.log("MainParticle",MainParticle.current)
-    
-    setTimeout(function() {
+    clearTimeout(time_txt) 
+    time_txt=setTimeout(function() {
       if(txtarr.indexOf(name)%2==0){
         setTxtbox("lefttxt")
       }else{
@@ -188,7 +190,8 @@ function IndexPage() {
           })
           
           console.log("Models",Models)
-          setTimeout(function() {
+          clearTimeout(time_change) // 清除定时器
+          time_change=setTimeout(function() {
             change(Models[0])
           },1000)
       }
