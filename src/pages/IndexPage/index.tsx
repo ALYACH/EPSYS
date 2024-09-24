@@ -193,7 +193,7 @@ function IndexPage() {
           clearTimeout(time_change) // 清除定时器
           time_change=setTimeout(function() {
             change(Models[0])
-          },1000)
+          },2000)
       }
     //   if (!hasInit) {
     //   hasInit = true
