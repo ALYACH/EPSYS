@@ -223,7 +223,7 @@ function IndexPage() {
     <div className={Styles.index_page}>
       <div className={Styles.top}>
         {/* <img src="../../src/assets/images/logo.png" alt="" /> */}
-        <div className={Styles.title}>FOXCONN<span>科技</span></div>
+        <div className={Styles.title}>个人作品</div>
       </div>
       
       <div className={Styles.canvas_wrapper} ref={wrapper}></div>
