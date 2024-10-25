@@ -22,9 +22,9 @@ function IndexPage() {
   const al = 1500
   const [current,setCurrent] = React.useState("")
   const [txtbox,setTxtbox] = React.useState("righttxt")
-  const [txtcontent1,setTxtcontent1] = React.useState("")
-  const [txtcontent2,setTxtcontent2] = React.useState("")
-  const [txtcontent3,setTxtcontent3] = React.useState("")
+  const [txtConObj,setTxtConObj] = React.useState({"txt1":"","txt2":"","txt3":""})
+  // const [txtcontent2,setTxtcontent2] = React.useState("")
+  // const [txtcontent3,setTxtcontent3] = React.useState("")
   interface TextObj {
     [key: string]: string[]
   }
@@ -83,7 +83,7 @@ function IndexPage() {
     {
       name: '数据',
       path: new URL('../../THREE/models/examples/transmission.obj', import.meta.url).href,
-      isCurrentModel:false,
+      modelId:0,
       onLoadComplete(Geometry) {
         const s = 500
         Geometry.scale(s, s, s)
@@ -98,7 +98,7 @@ function IndexPage() {
       name: '安全',
       //path: new URL('../../THREE/models/examples/ball.obj', import.meta.url).href,
       path: new URL('../../THREE/models/examples/safe.obj', import.meta.url).href,
-      isCurrentModel:false,
+      modelId:1,
       onLoadComplete(Geometry) {
         const s = 1600
         Geometry.scale(s, s, s)
@@ -112,7 +112,7 @@ function IndexPage() {
     {
       name: '稳定',
       geometry: GetFlatGeometry(),
-      isCurrentModel:false,
+      modelId:2,
       onAnimationFrameUpdate(PerfromPoint, TweenList, Geometry) {
         const p = PerfromPoint.geometry.getAttribute('position')
         TweenList.forEach((val, i) => {
@@ -131,7 +131,7 @@ function IndexPage() {
     {
       name: '范围',
       path: new URL('../../THREE/models/examples/w1.obj', import.meta.url).href,
-      isCurrentModel:false,
+      modelId:3,
       onLoadComplete(Geometry) {
         // Geometry.scale(scaleNum, scaleNum, scaleNum)
         // Geometry.translate(600, 100, -100)
@@ -147,11 +147,11 @@ function IndexPage() {
   let name="";
   function change(val: ParticleModelProps) {
     let name=val.name
+    sessionStorage.setItem("modelId",val.modelId.toString())
       setCurrent(name)
     setTxtbox("")
-    setTxtcontent1("")
-    setTxtcontent2("")
-    setTxtcontent3("")
+    setTxtConObj({"txt1":"","txt2":"","txt3":""})
+    
     MainParticle.current?.ChangeModel(name)
     console.log("MainParticle",MainParticle.current)
     clearTimeout(time_txt) 
@@ -161,18 +161,28 @@ function IndexPage() {
       }else{
         setTxtbox("righttxt")
       }
-      setTxtcontent1(txtobj[name][0])
-      setTxtcontent2(txtobj[name][1])
-      setTxtcontent3(txtobj[name][2])
+      setTxtConObj({"txt1":txtobj[name][0],"txt2":txtobj[name][1],"txt3":txtobj[name][2]})
   }, 3000) // 延迟3秒
     
   }
-  // @ts-expect-error
-  window.changeModel = (name: string) => {
-    if (MainParticle.current != null) {
+  // // @ts-expect-error
+  // window.changeModel = (name: string) => {
+  //   if (MainParticle.current != null) {
       
-      MainParticle.current.ChangeModel(name)
+  //     MainParticle.current.ChangeModel(name)
+  //   }
+  // }
+  window.onclick = function(event) {
+    let id=sessionStorage.getItem("modelId"),modelId;
+    console.log("onclick Models",Models);
+     console.log("onclick modelId",id);
+    if(id==null||Number(id)==Models.length-1){
+      modelId=0;
+    }else{
+      modelId=Number(id)+1;
     }
+     change(Models[modelId]);
+     
   }
   useEffect(() => {
     console.log("useEffect",MainParticle)
@@ -231,7 +241,7 @@ function IndexPage() {
         {
           Models.map((val) => {
             return (
-              <li key={val.name} className={current==val.name ? Styles.active : ''} onClick={() => change(val)}>
+              <li key={val.name} className={current==val.name ? Styles.active : ''} onClick={(event) => {event.preventDefault();event.stopPropagation();change(val)}}>
                 <i className="nav_spot"></i>
                 <span>{val.name}</span>
               </li>
@@ -247,12 +257,13 @@ function IndexPage() {
       </ul> */}
       <div className={Styles.thtableCell} style={{height: 959}}>
         <div className={`Styles.box ${txtbox=="lefttxt" ? Styles.lefttxt : Styles.righttxt}`}>
-          <p className={Styles.pstyle}>{txtcontent1}</p>
-          <p className={Styles.pstyle}>{txtcontent2}</p>
-          <p className={Styles.pstyle}>{txtcontent3}</p>
+          <p className={Styles.pstyle}>{txtConObj.txt1}</p>
+          <p className={Styles.pstyle}>{txtConObj.txt2}</p>
+          <p className={Styles.pstyle}>{txtConObj.txt3}</p>
         </div>
         {/* <div className={Styles.txt1}> </div> */}
       </div>
+      <a className={Styles.beian} href="https://beian.miit.gov.cn/" target="_blank">皖ICP备2021011752号-1</a>
     </div>
   )
 }

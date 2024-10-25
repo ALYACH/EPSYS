@@ -309,6 +309,11 @@ class ParticleSystem {
         z,
         isPlaying: true
       }
+      // const tween=new Tween.Tween(p, this.MainParticleGroup)
+      // tween.to({ y: 4 }, 1000).onUpdate((o) => {
+      // })
+      // tween.easing(Tween.Easing.Quadratic.InOut).start()
+
       p.tweenctx = new Tween.Tween(p, this.MainParticleGroup)
         .easing(Tween.Easing.Exponential.In)
         // 处理内部私有变量

@@ -53,7 +53,7 @@ export interface ParticleModelProps {
   /** 是否是当前模型
    * @default false
 */
-  isCurrentModel?: boolean
+  modelId:number,
   /**
    * 自定义加载器
    * @example
