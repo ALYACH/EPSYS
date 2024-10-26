@@ -195,15 +195,16 @@ function IndexPage() {
             Models,
             addons: [Atomsphere1, Atomsphere2, Atomsphere3],
             onModelsFinishedLoad: (point) => {
+              change(Models[0])
               MainParticle.current?.ListenMouseMove()
             }
           })
           
-          console.log("Models",Models)
-          clearTimeout(time_change) // 清除定时器
-          time_change=setTimeout(function() {
-            change(Models[0])
-          },2000)
+          // console.log("Models",Models)
+          // clearTimeout(time_change) // 清除定时器
+          // time_change=setTimeout(function() {
+          //   change(Models[0])
+          // },2000)
       }
     //   if (!hasInit) {
     //   hasInit = true
