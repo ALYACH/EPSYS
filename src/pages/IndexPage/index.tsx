@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Styles from './index.module.scss'
 import ParticleSystem from '@/THREE'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef,useState } from 'react'
 import AtmosphereParticle from '@/THREE/atmosphere'
 import { ParticleModelProps } from '@/declare/THREE'
 import Tween from '@tweenjs/tween.js'
@@ -10,7 +10,10 @@ import { BufferGeometry, Float32BufferAttribute } from 'three'
 import VerticesDuplicateRemove from '@/utils/VerticesDuplicateRemove'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import LoadingAnimation from './LoadingAnimation';
 function IndexPage() {
+  const [progress, setProgress] = useState(0);
+  const [modelLoaded, setModelLoaded] = useState(false);
   const wrapper = useRef<HTMLDivElement | null>(null)
   // let MainParticle: ParticleSystem | null = null
   const MainParticle=useRef<ParticleSystem | null>(null)
@@ -184,45 +187,38 @@ function IndexPage() {
      change(Models[modelId]);
      
   }
+  
   useEffect(() => {
-    console.log("useEffect",MainParticle)
+    console.log("useEffect11",MainParticle)
     console.log("wrapper",wrapper)
     // if (!hasInit) {
     //   hasInit = true
+    let loadProgress=0
       if ((MainParticle.current == null) && wrapper.current != null) {
           MainParticle.current = new ParticleSystem({
             CanvasWrapper: wrapper.current,
             Models,
             addons: [Atomsphere1, Atomsphere2, Atomsphere3],
             onModelsFinishedLoad: (point) => {
-              change(Models[0])
-              MainParticle.current?.ListenMouseMove()
+              // change(Models[0])
+              // MainParticle.current?.ListenMouseMove()
+              // console.log("onModelsFinishedLoad")
+              // 模拟模型加载进度
+               loadProgress = 90;
+              const interval = setInterval(() => {
+                loadProgress += 5;
+                console.log("loadProgress",loadProgress)
+                setProgress(loadProgress);
+                if (loadProgress >= 100) {
+                  clearInterval(interval);
+                  setModelLoaded(true);
+                  change(Models[0])
+                  MainParticle.current?.ListenMouseMove()
+                }
+              }, 100);
             }
           })
-          
-          // console.log("Models",Models)
-          // clearTimeout(time_change) // 清除定时器
-          // time_change=setTimeout(function() {
-          //   change(Models[0])
-          // },2000)
       }
-    //   if (!hasInit) {
-    //   hasInit = true
-    //   change(Models[0])
-    // }
-    // console.log("hasInit",hasInit)
-    // if ((MainParticle == null) && wrapper.current != null) {
-    //   MainParticle = new ParticleSystem({
-    //     CanvasWrapper: wrapper.current,
-    //     Models,
-    //     addons: [Atomsphere1, Atomsphere2, Atomsphere3],
-    //     onModelsFinishedLoad: (point) => {
-    //       MainParticle?.ListenMouseMove()
-    //     }
-    //   })
-      // let current = MainParticle.CurrentUseModelName?MainParticle.CurrentUseModelName: 'wave';
-      // setCurrent(current)
-    // }
   });
 //   (()=>{
 //     if(document.all){
@@ -265,6 +261,7 @@ function IndexPage() {
         {/* <div className={Styles.txt1}> </div> */}
       </div>
       <a className={Styles.beian} href="https://beian.miit.gov.cn/" target="_blank">皖ICP备2021011752号-1</a>
+      <LoadingAnimation show={progress < 100} progress={progress} />
     </div>
   )
 }
