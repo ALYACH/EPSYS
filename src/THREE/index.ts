@@ -106,7 +106,6 @@ class ParticleSystem {
     this.WIDTH = window.innerWidth
     /** 模型列表  */
     this.modelList = new Map()
-    console.log("modelList qian", this.modelList)
     /** 已加载的模型数量统计 */
     this._LOAD_COUNT_ = 0
     /** 模型指针 */

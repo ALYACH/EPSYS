@@ -12,7 +12,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import LoadingAnimation from './LoadingAnimation';
 function IndexPage() {
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(90);
   const [modelLoaded, setModelLoaded] = useState(false);
   const wrapper = useRef<HTMLDivElement | null>(null)
   // let MainParticle: ParticleSystem | null = null
@@ -191,9 +191,13 @@ function IndexPage() {
   useEffect(() => {
     console.log("useEffect11",MainParticle)
     console.log("wrapper",wrapper)
+    
     // if (!hasInit) {
     //   hasInit = true
-    let loadProgress=0
+    let loadProgress=80
+    // if(loadProgress<=80){
+    //   setProgress(loadProgress);console.log("progress1",progress)
+    // }
       if ((MainParticle.current == null) && wrapper.current != null) {
           MainParticle.current = new ParticleSystem({
             CanvasWrapper: wrapper.current,
@@ -208,6 +212,7 @@ function IndexPage() {
               const interval = setInterval(() => {
                 loadProgress += 5;
                 console.log("loadProgress",loadProgress)
+                console.log("progress2",progress)
                 setProgress(loadProgress);
                 if (loadProgress >= 100) {
                   clearInterval(interval);
@@ -220,11 +225,6 @@ function IndexPage() {
           })
       }
   });
-//   (()=>{
-//     if(document.all){
-//     MainParticle.current?.ChangeModel("数据")
-//     }
-//  })();
  
   return (
     <div className={Styles.index_page}>
